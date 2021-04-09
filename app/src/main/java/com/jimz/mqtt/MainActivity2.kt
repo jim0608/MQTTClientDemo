@@ -1,4 +1,4 @@
-package com.jimz.mmqt
+package com.jimz.mqtt
 
 import android.os.Bundle
 import android.view.Menu

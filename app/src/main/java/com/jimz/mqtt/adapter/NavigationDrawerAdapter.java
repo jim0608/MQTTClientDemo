@@ -1,4 +1,4 @@
-package com.jimz.mmqt.adapter;
+package com.jimz.mqtt.adapter;
 
 
 import android.content.Context;
@@ -12,9 +12,8 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jimz.mmqt.R;
+import com.jimz.mqtt.R;
 
-import java.util.Collections;
 import java.util.List;
 
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.MyViewHolder> {

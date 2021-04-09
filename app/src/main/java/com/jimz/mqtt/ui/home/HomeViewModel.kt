@@ -1,4 +1,4 @@
-package com.jimz.mmqt.ui.home
+package com.jimz.mqtt.ui.home
 
 import android.app.Application
 import android.content.Context
@@ -6,8 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.jimz.mmqt.MQTTManager
+import com.jimz.mqtt.MQTTManager
 import org.eclipse.paho.client.mqttv3.*
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {

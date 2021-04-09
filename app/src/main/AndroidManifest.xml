@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jimz.mmqt">
+    package="com.jimz.mqtt">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,11 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MMQTClientDemo">
+        android:theme="@style/Theme.MQTTClientDemo">
         <activity
-            android:name=".MainActivity2"
+            android:name="com.jimz.mqtt.MainActivity2"
             android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.MMQTClientDemo.NoActionBar">
+            android:theme="@style/Theme.MQTTClientDemo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
         </activity>
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-        <service android:name=".MQTTService" />
+        <service android:name="com.jimz.mqtt.MQTTService" />
     </application>
 
 </manifest>

@@ -1,12 +1,10 @@
-package com.jimz.mmqt
+package com.jimz.mqtt
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import com.jimz.mmqt.databinding.ActivityMainBinding
-import org.eclipse.paho.android.service.MqttService
+import com.jimz.mqtt.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBinding:ActivityMainBinding

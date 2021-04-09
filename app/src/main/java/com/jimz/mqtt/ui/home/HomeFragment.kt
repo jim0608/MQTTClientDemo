@@ -1,22 +1,19 @@
-package com.jimz.mmqt.ui.gallery
+package com.jimz.mqtt.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jimz.mmqt.R
-import com.jimz.mmqt.adapter.NavigationDrawerAdapter
-import com.jimz.mmqt.databinding.FragmentHomeBinding
-import com.jimz.mmqt.ui.home.HomeViewModel
-import java.util.ArrayList
+import com.jimz.mqtt.R
+import com.jimz.mqtt.adapter.NavigationDrawerAdapter
+import com.jimz.mqtt.databinding.FragmentHomeBinding
+import java.util.*
 
-class GalleryFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var dataBinding: FragmentHomeBinding

@@ -1,16 +1,14 @@
-package com.jimz.mmqt
+package com.jimz.mqtt
 
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.wifi.p2p.WifiP2pManager
 import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
-import java.util.*
 
 
 /**

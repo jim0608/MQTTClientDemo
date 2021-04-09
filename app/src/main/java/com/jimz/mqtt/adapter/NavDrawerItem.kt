@@ -1,4 +1,4 @@
-package com.jimz.mmqt.adapter
+package com.jimz.mqtt.adapter
 
 /**
  * @author Create By 张晋铭
