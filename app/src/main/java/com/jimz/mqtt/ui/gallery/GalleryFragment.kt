@@ -54,13 +54,13 @@ class GalleryFragment : Fragment() {
 
     private fun initClick() {
         dataBinding.btnInitMqtt.setOnClickListener {
-            viewModel.initMqtt(msg())
+            viewModel.initMqtt(requireContext(),msg())
         }
         dataBinding.btnConnectMqtt.setOnClickListener {
             viewModel.connect(msg())
         }
         dataBinding.btnPublish.setOnClickListener { viewModel.publish(msg()) }
-        dataBinding.btnSubscribe.setOnClickListener { viewModel.subscribe(msg()) }
+        dataBinding.btnSubscribe.setOnClickListener { viewModel.subscribe() }
     }
 
     private fun msg(): String = dataBinding.etMqttInput.text.toString()

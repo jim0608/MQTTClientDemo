@@ -1,11 +1,15 @@
 package com.jimz.mqtt
 
+import android.app.Service
 import android.content.Context
+import android.content.Intent
+import android.os.IBinder
 import android.util.Log
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.MqttCallback
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
+import kotlin.concurrent.thread
 
 /**
  * @author Create By 张晋铭
@@ -20,10 +24,10 @@ class MQTTManager(
 //    url: String? = "tcp://192.168.0.59:1883",
     userName: String? = "admin",
     password: String? = "password",
-    isCleanSession: Boolean? = false,
+    isCleanSession: Boolean? = true,
     connectionTimeout: Int? = 10,
     keepAliveInterval: Int? = 20
-) {
+) : Service(){
     private val TAG = "TAG_MQTTManager"
     private var mMQTTAndroidClient: MqttAndroidClient? = null
     private var mMQTTConnectOptions: MqttConnectOptions? = null
@@ -36,23 +40,36 @@ class MQTTManager(
     private val mConnectTimeout = connectionTimeout ?: 10
     private val mKeepAliveInterval = keepAliveInterval ?: 20
 
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return super.onStartCommand(intent, flags, startId)
+    }
+    override fun onCreate() {
+        super.onCreate()
+    }
 
     /**
      * init
      */
     fun initMQTT(context: Context, callback: MqttCallback) {
+
         mMQTTAndroidClient = MqttAndroidClient(context, mUrl, mClientId)
         mMQTTAndroidClient?.setCallback(callback)
         mMQTTConnectOptions = MqttConnectOptions()
         mMQTTConnectOptions?.apply {
             userName = mUserName
             password = mPassword?.toCharArray()
-            // 清除缓存
-            isCleanSession = cleanSession
+
             // 设置超时时间，单位：秒
             connectionTimeout = mConnectTimeout
             // 心跳包发送间隔，单位：秒
             keepAliveInterval = mKeepAliveInterval
+            //是否自动重连
+            isAutomaticReconnect = true
+            // 清除缓存
+            isCleanSession = true
         }
     }
 
@@ -76,7 +93,6 @@ class MQTTManager(
      */
     fun setWill(publishTopic: String) {
         // last will message
-        var doConnect = true
         val message = "{\"terminal_uid\":\"" + mClientId + "\"}"
         val qos = 2
         val retained = false
@@ -86,7 +102,6 @@ class MQTTManager(
                 mMQTTConnectOptions?.setWill(publishTopic, message.toByteArray(), qos, retained)
             } catch (e: Exception) {
                 Log.i(TAG, "Exception Occured", e)
-                doConnect = false
                 iMqttActionListener.onFailure(null, e)
             }
         }
@@ -107,7 +122,7 @@ class MQTTManager(
     fun publish(
         publishTopic: String,
         message: String,
-        qos: Int? = 0,
+        qos: Int? = 2,
         retained: Boolean? = false,
         publishTag: MQTTEnum? = MQTTEnum.PUBLISH
     ) {
@@ -115,7 +130,7 @@ class MQTTManager(
         mMQTTAndroidClient?.publish(
             publishTopic,
             message.toByteArray(),
-            qos?:0,
+            qos?:2,
             retained?:false,
             publishTag?:MQTTEnum.PUBLISH,
             iMqttActionListener
@@ -131,9 +146,13 @@ class MQTTManager(
      */
     fun subscribe(
         subscribeTopic: String,
-        qos: Int? = 0,
+        qos: Int? = 2,
         subscribeTag: MQTTEnum? = MQTTEnum.SUBSCRIBE
     ) {
         mMQTTAndroidClient?.subscribe(subscribeTopic, qos?:0, subscribeTag, iMqttActionListener)
+    }
+
+    fun disconnect() {
+        mMQTTAndroidClient?.disconnect()
     }
 }

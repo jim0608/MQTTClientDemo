@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.util.Log
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
+import java.util.*
 
 
 /**
@@ -25,17 +26,18 @@ class MQTTService : Service() {
     private val mClientId = "clientTestId"
     private var mPublishTopic = "tourist_enter" //发布主题
 
-    private var mResponseTopic = "message_arrived" //响应主题
+    private var mResponseTopic = "home" //响应主题
 
     companion object{
         private var mMQTTAndroidClient: MqttAndroidClient? = null
         private var mMQTTConnectOptions: MqttConnectOptions? = null
-        private var mPublishTopic = "tourist_enter" //发布主题
+        private var mPublishTopic = "gallery" //发布主题
 
         fun connect(){
             mMQTTAndroidClient?.connect(mMQTTConnectOptions, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
                     Log.i("TAG", "onSuccess: $asyncActionToken")
+                    mMQTTAndroidClient?.subscribe("home",2);
                 }
 
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
@@ -136,6 +138,7 @@ class MQTTService : Service() {
             it.isCleanSession = true
             // 设置超时时间，单位：秒
             it.connectionTimeout = 10
+//            it.sslProperties = ssl
             // 心跳包发送间隔，单位：秒
             it.keepAliveInterval = 20
             it.userName = mUserName

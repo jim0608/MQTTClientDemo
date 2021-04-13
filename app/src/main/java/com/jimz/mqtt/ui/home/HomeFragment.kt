@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jimz.mqtt.R
 import com.jimz.mqtt.adapter.NavigationDrawerAdapter
 import com.jimz.mqtt.databinding.FragmentHomeBinding
+import org.eclipse.paho.android.service.MqttService
 import java.util.*
 
 class HomeFragment : Fragment() {
@@ -53,13 +54,13 @@ class HomeFragment : Fragment() {
 
     private fun initClick() {
         dataBinding.btnInitMqtt.setOnClickListener {
-            viewModel.initMqtt(msg())
+            viewModel.initMqtt(requireActivity(),msg())
         }
         dataBinding.btnConnectMqtt.setOnClickListener {
             viewModel.connect(msg())
         }
         dataBinding.btnPublish.setOnClickListener { viewModel.publish(msg()) }
-        dataBinding.btnSubscribe.setOnClickListener { viewModel.subscribe(msg()) }
+        dataBinding.btnSubscribe.setOnClickListener { viewModel.subscribe() }
     }
 
     private fun msg(): String = dataBinding.etMqttInput.text.toString()

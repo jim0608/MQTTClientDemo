@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jimz.mqtt.MQTTManager
 import org.eclipse.paho.client.mqttv3.*
+import kotlin.concurrent.thread
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "TAG_HomeViewModel"
@@ -26,24 +27,30 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private var publishTopic: String = ""
     private var clientId: String = ""
 
-    fun initMqtt(clientId: String) {
-        this.clientId = clientId
-        mqttManager = MQTTManager(clientId, iMqttActionListener)
-        mqttManager?.initMQTT(mContext, receiveCallBack)
+    fun initMqtt(mContext: Context ,clientId: String = "home") {
+        this.clientId = "home"
+        mqttManager = MQTTManager(this.clientId, iMqttActionListener)
+        thread {
+            mqttManager?.initMQTT(mContext, receiveCallBack)
+        }
     }
 
-    fun connect(publishTopic: String) {
-        this.publishTopic = publishTopic
+    fun connect(publishTopic: String = "gallery") {
         mqttManager?.connectMQTT()
         mqttManager?.setWill(publishTopic)
     }
 
-    fun subscribe(subscribeTopic: String) {
+    fun subscribe() {
         mqttManager?.subscribe(clientId)
     }
 
-    fun publish(message: String, publishTopic: String? = this.publishTopic) {
-        mqttManager?.publish(publishTopic ?: this.publishTopic, message)
+    fun publish(message: String) {
+        mqttManager?.publish(publishTopic, message)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        mqttManager?.disconnect()
     }
 
 
